@@ -21,8 +21,8 @@ def moveUR3(x, y):
     print(cx)
     print(cy)
     move_xy = "movel(pose_trans(get_forward_kin(), p["+str(cx)+","+str(cy)+",0,0,0,0]), a=1.0, v=1)"
-    push_down = "movel(pose_trans(get_forward_kin(), p[0,0,0.09,0,0,0]), a=1.0, v=1)"
-    push_up = "movel(pose_trans(get_forward_kin(), p[0,0,-0.09,0,0,0]), a=1.0, v=1)"
+    push_down = "movel(pose_trans(get_forward_kin(), p[0,0,0.10,0,0,0]), a=1.0, v=1)"
+    push_up = "movel(pose_trans(get_forward_kin(), p[0,0,-0.10,0,0,0]), a=1.0, v=1)"
 
     while (count < 1):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -96,7 +96,7 @@ while(cap.read()):
             continue
 
         x, y, w, h = cv2.boundingRect(cnt)
-        cv2.putText(roi, str(x)+","+str(y), (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 2)
+        cv2.putText(roi, "x="+str(x)+", y="+str(y), (175, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
         btn = cv2.waitKey(1)
         if (btn == 32):
             moveUR3(x, y)
@@ -107,9 +107,16 @@ while(cap.read()):
         cv2.ellipse(roi, ellipse, (0, 255, 0), 2)
         counter+=1
 
-    cv2.putText(roi, str(counter), (10,100), cv2.FONT_HERSHEY_SIMPLEX, 4, (255,0,0), 2, cv2.LINE_AA)
-    cv2.imshow("FIBO - FRA631 Class Project 2022", roi)
+    cv2.putText(roi, "Found: "+str(counter), (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2, cv2.LINE_AA)
 
+    cv2.putText(roi, "pH: ", (10, 270), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Base: ", (10, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Shoulder: ", (10, 330), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Elbow: ", (10, 360), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Wrist1: ", (10, 390), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Wrist2: ", (10, 420), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.putText(roi, "Wrist3: ", (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2, cv2.LINE_AA)
+    cv2.imshow("FIBO - FRA631 Class Project 2022", roi)
 
     if cv2.waitKey(1) & 0xFF==ord('q'):
         break
